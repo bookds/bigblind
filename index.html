@@ -122,7 +122,10 @@
   .st-row{display:flex; flex-wrap:wrap; gap:5px; align-items:center}
   .pill{display:flex; align-items:center; gap:5px; border-radius:8px; padding:3px 8px;
     background:rgba(255,255,255,.05); border:1px solid var(--line)}
-  .pill .pos{font-size:9px; font-weight:800; color:var(--muted); letter-spacing:.3px}
+  .pill .pos{font-size:9px; font-weight:800; color:var(--muted); letter-spacing:.3px; display:flex; flex-direction:column; align-items:flex-start; line-height:1.25}
+  .pill .pstk{font-size:8px; font-weight:700; color:var(--muted); opacity:.75; letter-spacing:0}
+  .pill.hero .pstk{color:var(--gold); opacity:.85}
+  .st-head .sthp{color:rgba(255,209,102,.75); letter-spacing:.5px}
   .pill .act{font-size:12px; font-weight:800; color:#dfe7e3}
   .pill.fold{opacity:.45}
   .pill.check .act{color:#bcc8c2}
@@ -355,7 +358,7 @@
   </div>
 </div>
 
-<script src="spots.js?v=13"></script>
-<script src="app.js?v=10"></script>
+<script src="spots.js?v=14"></script>
+<script src="app.js?v=11"></script>
 </body>
 </html>

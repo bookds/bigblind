@@ -107,22 +107,70 @@
   function tag(cls, text){ const t=document.createElement('div'); t.className='tag '+cls; t.textContent=text; return t; }
 
   // ---- visual action log ----
-  const ACT_LABEL = {fold:'Fold', check:'Check', call:'Call', bet:'Bet', cbet:'C-bet', donk:'Lead', raise:'Raise', '3bet':'3-Bet', '4bet':'4-Bet', shove:'All-in'};
-  const ACT_CLASS = {fold:'fold', check:'check', call:'call', bet:'bet', cbet:'bet', donk:'bet', raise:'raise', '3bet':'raise', '4bet':'raise', shove:'shove'};
+  const ACT_LABEL = {fold:'Fold', check:'Check', call:'Call', bet:'Bet', cbet:'C-bet', donk:'Lead', raise:'Raise', '3bet':'3-Bet', '4bet':'4-Bet', shove:'All-in', squeeze:'Squeeze'};
+  const ACT_CLASS = {fold:'fold', check:'check', call:'call', bet:'bet', cbet:'bet', donk:'bet', raise:'raise', '3bet':'raise', '4bet':'raise', shove:'shove', squeeze:'raise'};
 
-  function pill(a, heroPos){
+  // ===POT-ENGINE-START=== (pot_check.js โหลดโค้ดช่วงนี้ไปตรวจกับทุก spot — แก้แล้วรัน node pot_check.js)
+  // ไล่คำนวณจาก action จริง: pot ตอนเข้าแต่ละ street + ชิปคงเหลือของแต่ละคนหลังทุก action
+  function potEngine(spot){
+    const FR = {'½':0.5,'⅓':1/3,'⅔':2/3,'¾':0.75};
+    const heroPos = (spot.heroLine||'').split('•')[0].trim() || 'YOU';
+    const isHU = (spot.stage||'').toUpperCase().indexOf('HEADS') >= 0;
+    let pot = 1.5, curBet = 1;
+    const commit = {}, total = {};            // commit = street นี้, total = ทั้งมือ
+    const seed = isHU ? {BTN:0.5, BB:1} : {SB:0.5, BB:1};   // blinds
+    for(const k in seed){ commit[k]=seed[k]; total[k]=seed[k]; }
+    const startPots=[], rowsPerStreet=[];
+    (spot.streets||[]).forEach((st,si)=>{
+      if(si>0){ for(const k in commit) commit[k]=0; curBet=0; }
+      startPots.push(+pot.toFixed(2));
+      const rows=[];
+      (st.acts||[]).forEach(a=>{
+        const p = a.pos==='YOU' ? heroPos : a.pos;
+        const grouped = /[\s…]/.test(p.trim());          // 'UTG MP' / 'UTG…BTN' (fold รวบ)
+        const num = a.amt ? parseFloat(a.amt) : NaN;
+        const frac = a.amt && FR[a.amt.trim()];
+        let added = 0;
+        if(a.a==='check' || a.a==='fold'){ added = 0; }
+        else if(a.a==='bet' || a.a==='cbet' || a.a==='donk'){
+          const size = !isNaN(num) ? num : (frac ? +(pot*frac).toFixed(1) : 0);
+          added = size; curBet = (commit[p]||0) + size;
+        } else if(a.a==='call'){
+          const to = !isNaN(num) ? num : curBet;
+          added = Math.max(0, to - (commit[p]||0));
+        } else {                                          // raise / 3bet / 4bet / squeeze / shove = ยอด "to"
+          const to = !isNaN(num) ? num : 2.5;             // raise ไม่ระบุ amt (spot เก่า) สมมติ 2.5
+          added = Math.max(0, to - (commit[p]||0)); curBet = Math.max(curBet, to);
+        }
+        if(!grouped && added){ commit[p]=(commit[p]||0)+added; total[p]=(total[p]||0)+added; pot += added; }
+        rows.push(grouped ? null : (total[p]||0));        // ชิปที่ลงไปแล้วทั้งหมดของคนนั้น หลัง action นี้
+      });
+      rowsPerStreet.push(rows);
+    });
+    return { startPots, rowsPerStreet,
+             ok: Math.abs(pot - (spot.pot||0)) <= 0.6,    // pot field ตรงกับ action → เชื่อถือได้
+             finalPot:+pot.toFixed(2) };
+  }
+  // ===POT-ENGINE-END===
+
+  const fmtBB = n => (+n.toFixed(1)).toString();
+
+  function pill(a, heroPos, remain){
     const el=document.createElement('div');
     const isHero = a.pos==='YOU';
     el.className='pill '+ (ACT_CLASS[a.a]||'') + (isHero?' hero':'');
-    const posTxt = isHero ? (heroPos||'YOU') : a.pos;
+    const posTxt = isHero ? `You(${heroPos||'?'})` : a.pos;
     const amt = a.amt ? ` ${a.amt}` : '';
-    el.innerHTML = `<span class="pos">${posTxt}</span><span class="act">${ACT_LABEL[a.a]||a.a}${amt}</span>`;
+    const stk = (remain!=null && !isNaN(remain)) ? `<span class="pstk">${fmtBB(remain)}bb</span>` : '';
+    el.innerHTML = `<span class="pos">${posTxt}${stk}</span><span class="act">${ACT_LABEL[a.a]||a.a}${amt}</span>`;
     return el;
   }
 
   function renderStreets(spot){
     const log=$('log'); log.innerHTML='';
     const heroPos = (spot.heroLine||'').split('•')[0].trim() || 'YOU';
+    const eng = potEngine(spot);
+    const stackMap = {}; (spot.stacks||[]).forEach(([p,bb])=> stackMap[p]=bb);
 
     // header สรุป: ตำแหน่งคุณ + pot ปัจจุบัน + ยอดต้องจ่าย
     const hd=document.createElement('div'); hd.className='log-head';
@@ -143,11 +191,18 @@
       log.appendChild(sr);
     }
 
-    (spot.streets||[]).forEach(st=>{
-      const head=document.createElement('div'); head.className='st-head'; head.textContent=st.name;
+    (spot.streets||[]).forEach((st,si)=>{
+      const head=document.createElement('div'); head.className='st-head';
+      // pot ตอนเข้า street นี้ — โชว์เฉพาะเมื่อยอดคำนวณจาก action ตรงกับ pot ของ spot
+      head.innerHTML = st.name + (eng.ok ? `<span class="sthp"> · pot ${fmtBB(eng.startPots[si])}bb</span>` : '');
       log.appendChild(head);
       const row=document.createElement('div'); row.className='st-row';
-      (st.acts||[]).forEach(a=> row.appendChild(pill(a, heroPos)));
+      (st.acts||[]).forEach((a,ai)=>{
+        const p = a.pos==='YOU' ? heroPos : a.pos;
+        const committed = eng.rowsPerStreet[si][ai];
+        const remain = (committed!=null && stackMap[p]!=null) ? stackMap[p]-committed : null;
+        row.appendChild(pill(a, heroPos, remain));
+      });
       if(st.note){ const n=document.createElement('div'); n.className='st-note'; n.textContent=st.note; row.appendChild(n); }
       log.appendChild(row);
     });

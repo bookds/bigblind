@@ -757,7 +757,7 @@ const SPOTS = [
 {
   id:'h1b', cat:'postflop', step:'2/4', hidden:true,
   stage:'Mid Stage', stack:'40bb',
-  pot:5.5, toCall:2,
+  pot:7.5, toCall:2,
   board:['4c','9d','7s'], hero:['5h','6h'], heroLine:'BB',
   stacks:[['CO',45],['BB',40]],
   streets:[
@@ -849,7 +849,7 @@ const SPOTS = [
 {
   id:'h2b', cat:'preflop', step:'2/3', hidden:true,
   stage:'Mid Stage', stack:'35bb',
-  pot:11.2, toCall:5.3,
+  pot:10.2, toCall:5.3,
   hero:['8s','8d'], heroLine:'UTG • 35bb',
   stacks:[['UTG',35],['BB',38]],
   streets:[{name:'Preflop', acts:[{pos:'YOU',a:'raise',amt:'2.2'},{pos:'MP CO BTN SB',a:'fold'},{pos:'BB',a:'3bet',amt:'7.5'}]}],
@@ -858,7 +858,7 @@ const SPOTS = [
   best:1, ok:[0],
   nextSpotId:'h2c',
   why:`<b>เฉลย: Call (set-mine + realize equity)</b> — vs BB 3bet range จาก IP-OOP ที่ 35bb, 88 มี ~38-42% vs typical range (QQ+, AK + bluffs) แต่ "set or give up" บ่อย
-  <br>ราคา 5.3 เข้า 11.2 (pot odds ~32%) + implied odds จาก set (12% ตี set = stack big pots) → call +EV
+  <br>ราคา 5.3 เข้า 10.2 (ขอ ~34% equity) + implied odds จาก set (12% ตี set = stack big pots) → call +EV
   <br>4-bet ปั้น value ยาก (โดน fold ออก worse pairs, โดน jam จาก QQ+/AK ที่เราเป็นรอง). Fold ตึง — call ได้ราคาดี`,
   deep:`<b>เจาะลึก</b><br>
   <b>• Range BB 3-bet vs UTG:</b> tight (QQ+, AK ส่วนใหญ่) + บาง bluffs (A5s, KQs). 88 vs (QQ+, AK) = ~30% equity, vs polarized (มี bluffs) ~42%
@@ -869,7 +869,7 @@ const SPOTS = [
 {
   id:'h2c', cat:'postflop', step:'3/3', hidden:true,
   stage:'Mid Stage', stack:'35bb',
-  pot:15.5, toCall:8,
+  pot:23.5, toCall:8,
   board:['Kh','Qc','4s'], hero:['8s','8d'], heroLine:'UTG',
   stacks:[['UTG',35],['BB',38]],
   streets:[
@@ -882,13 +882,13 @@ const SPOTS = [
   why:`<b>เฉลย: Fold (disciplined)</b> — 88 underpair บน K-Q-4 vs BB 3bet range = <b>ฝันร้าย</b>
   <br>(1) ใบ K, Q บล็อก top pairs ของเขา — แต่ BB 3bet range เต็มไปด้วย Kx/Qx (AK, AQ, KQ, KK, QQ) — เรา dominated หมด
   <br>(2) ไม่ตี set (12% หาย) + ไม่มี backdoor straight/flush ที่มีค่า
-  <br>(3) ราคา 8 ของ pot 15.5 ขอ ~34% equity — 88 vs typical 3-bet range บน K-Q-4 ≈ 12-18% (set draw 2 outs + outs vs bluffs น้อย)
+  <br>(3) ราคา 8 เข้า pot 23.5 ขอ ~25% equity — 88 vs typical 3-bet range บน K-Q-4 ≈ 12-18% (set draw 2 outs + outs vs bluffs น้อย)
   <br><br>🏁 <b>จบมือ — เรา fold</b>:<br>
   เสีย <b>7.5bb</b> ที่ลงไปก่อน flop (preflop call). <b>เก็บ stack 27.5bb</b> ไว้สู้มือหน้า — แทนที่จะ call-call ลงพอตใหญ่กับ underpair ที่แทบไม่ชนะ
   <br><br>BB คาดว่ามี AK/AQ/KQ — ถ้า peek จริงเขามักโชว์อะไรเหล่านี้`,
   deep:`<b>เจาะลึก / Hand recap</b><br>
   <b>• ทำไม fold ถูก:</b> 88 set-mine ราคา 5.3 ที่ pre — เมื่อไม่ตี set บน <b>scary board</b> ที่เราเป็นรอง = give up. นี่คือ "set or give up" mindset ที่ตรงไปตรงมา
-  <br><b>• Equity vs BB c-bet range:</b> AK (44% vs us), AQ (28%), KQ (8%), KK (2%, set over set), QQ (8%), AA (18%), AT-KJ-QJ broadway draws (~30%). filtered c-bet range (เน้น value + some bluffs ของ Ax). 88 มี ~15-20% — ต่ำกว่า 34% threshold ของ pot odds
+  <br><b>• Equity vs BB c-bet range:</b> AK (44% vs us), AQ (28%), KQ (8%), KK (2%, set over set), QQ (8%), AA (18%), AT-KJ-QJ broadway draws (~30%). filtered c-bet range (เน้น value + some bluffs ของ Ax). 88 มี ~15-20% — ต่ำกว่า 25% threshold ของ pot odds
   <br><b>• ทำไมไม่ floor call:</b> board เปียกพอ (broadway draws เพียบ) + เป็น OOP + stack ตื้น (15bb หลัง call) → set up turn ที่เล่นยาก. ทุก scary turn (J, T, A) → fold/bluff catch
   <br><b>• Hand summary:</b> เริ่ม 35bb → จบ 27.5bb (เสีย 7.5bb pre-flop call). เทียบกับ "call flop call turn fold river" ที่อาจเสีย 22-25bb → fold flop คือ <b>save 14-17bb</b>
   <br><b>• อะไรเปลี่ยนคำตอบ:</b> board paint แต่แห้งกว่า (เช่น Q-7-2 rainbow) → call (เรามี overpair vs Qx). board low (8-5-2 ทำให้ 88 = overpair) → snap call/raise. ถ้าเป็น 99-TT บน K-Q-4 → close แต่ยัง fold ส่วนใหญ่`
