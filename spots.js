@@ -22,6 +22,7 @@
      step:'1/4',             // (ออปชั่น) ป้ายบอกขั้นใน hand: "1/4", "2/4", ...
      hidden:true,            // (ออปชั่น) middle/last step ของ hand — ห้ามโผล่เป็นจุดเริ่มสุ่ม (เข้าได้ผ่าน nextSpotId)
      nextSpotId:'h1b',       // (ออปชั่น) ขั้นถัดไปของ hand เดิม. ถ้าเลือก "ไม่ใช่ fold" → ไปต่อ link นี้; ถ้า fold → จบ hand
+     reveal:{pos:'BTN', cards:['Ah','Qh'], note:'เปิด nut flush<br>— ...'}, // (ออปชั่น) เปิดไพ่คู่ต่อสู้ใน sheet เฉลย (showdown/fold-หงาย) — ไพ่ห้ามชนกับ board/hero
    }
    ============================================================ */
 
@@ -815,6 +816,7 @@ const SPOTS = [
   q:'River 2 brick. เรายังถือ 9-high straight. BB OOP ก่อน — bet เท่าไร?',
   opts:[{k:'call',label:'Check'},{k:'raise',label:'Bet',sub:'⅓ pot'},{k:'raise',label:'Bet',sub:'⅔ pot'}],
   best:2, ok:[1],
+  reveal:{pos:'CO', cards:['As','9s'], note:'call แล้วเปิด top pair top kicker<br>— straight เราชนะ'},
   why:`<b>เฉลย: Bet ⅔ pot (value)</b> — river brick ไม่เปลี่ยน range. CO ที่ call turn + check turn-back ไม่เคยทำ → CO call river ด้วย Kx? ไม่มี K. ที่จริง CO call ด้วย <b>9x/overpairs/sets/Tx</b>. เราชนะส่วนใหญ่
   <br>⅔ ขนาดดีที่สุดของ thin value: top pair จ่ายเต็ม, overpairs (AA-TT) จ่าย, sets จ่าย (เป็น "trap" สำหรับเขา). JT ยัง <b>raise/jam</b> (เราจะ snap call เพราะราคา) — ไม่ได้เสีย ev มาก
   <br><br>🏁 <b>จบมือ — Showdown:</b><br>
@@ -1076,6 +1078,7 @@ const SPOTS = [
   q:'River 4♦ — <b>ทุก draw พลาดหมด</b> รวมถึงของเรา (เหลือ ace-high เปล่าๆ). pot 87.5, เราเหลือ 56.5bb. เช็คยอมแพ้ หรือ jam ปิดเรื่องที่เล่ามา 3 streets?',
   opts:[{k:'call',label:'Check',sub:'ยอมแพ้'},{k:'shove',label:'All-in',sub:'56.5bb'}],
   best:1,
+  reveal:{pos:'CO', cards:['Ac','Qc'], note:'fold top pair แล้วหงายไพ่<br>— bluff เราสำเร็จ'},
   why:`<b>เฉลย: All-in (บลัฟที่ "ต้องทำ" ไม่ใช่แค่ "ทำได้")</b> — ความจริงที่โหดที่สุดก่อน: ace-high ของเรา <b>แพ้ 681 จาก 990 combos ที่ showdown</b> (ทุก pair ทุก Qx แม้แต่ K-high บางตัว... ที่จริง AK ก็บีตเรา) — การ check คือการยอมเสีย pot 87.5 เกือบแน่นอน <span class="k">เราไม่มีอะไรจะเสียไปมากกว่านี้แล้ว</span>
   <br><br>ในขณะที่เรื่องที่เราเล่ามา 3 streets ตรงเป๊ะ: 3bet pre → c-bet → barrel ⅔ → jam river = <b>QQ+/AQ/sets ชัดๆ</b>. CO ที่ call มาสองทาง (Qx, JJ/TT, 88-99, busted spade draws) เจอ jam 56.5 เข้า 87.5 ต้องจ่าย ~28% ของ 200bb pot ด้วย bluff-catcher ใบเดียว — เขา fold มือเกือบทั้งหมด รวมถึง <b>AQ/KQ ที่บีตเราขาดลอย</b>
   <br><br>และ A♠ ของเราคือ blocker ทอง: ตัด nut flush draw ที่ผ่อนมาแล้ว... ไม่มา (A♠X♠ ที่เขาอาจ hero-call ด้วย) — bluff นี้เลือก combo ถูกต้องที่สุดใน range เรา
@@ -1169,6 +1172,7 @@ const SPOTS = [
   q:'River 2♥ pair บอร์ด — draws พลาดหมด (♦ ไม่มา, 56/9T ไม่มา). เราเช็คไป BTN เบท ½ pot. TPTK (ตอนนี้ Aces up: AA22-K) — call หรือ fold?',
   opts:[{k:'fold',label:'Fold'},{k:'call',label:'Call',sub:'12bb'}],
   best:1,
+  reveal:{pos:'BTN', cards:['7s','7h'], note:'เปิด full house (777-22)<br>— cooler, call เราถูกแล้ว'},
   why:`<b>เฉลย: Call (ถูกต้อง 100%)... แล้วดูเฉลยของโต๊ะ</b> — มาดูเหตุผลก่อน:
   <br>• river 2♥ คือ brick สมบูรณ์: <b>ทุก draw ที่ไล่เรามา 2 streets พลาดหมด</b> (เพชร, 56, 9T) — มือพวกนั้นเหลือทางเดียวคือ bluff
   <br>• เราเช็ค = เชิญ bluff. BTN เบท ½ pot ขอเราชนะแค่ ~25% — เราบีต <b>busted draws ทั้งหมด + Ax ที่อ่อนกว่าที่เบท thin</b>
@@ -1344,6 +1348,7 @@ const SPOTS = [
   q:'Turn 6♥ — <b>เราตี nut straight!</b> (T-9-8-7-6) บอร์ดยังไม่มี flush draw. รีดยังไงให้ได้มากสุด?',
   opts:[{k:'call',label:'Check',sub:'trap'},{k:'raise',label:'Bet',sub:'½ (7)'},{k:'raise',label:'Bet',sub:'¾ (10.5)'}],
   best:2, ok:[1],
+  reveal:{pos:'BTN', cards:['8h','8d'], note:'เปิด top set<br>— แพ้ nut straight ของเรา'},
   why:`<b>เฉลย: Bet ¾</b> — เราถือ nuts แท้ของ runout นี้ (ไม่มี combo ไหนบีต — มีแค่ T9 เสมอ). คำถามเดียวคือ "รีดยังไงให้มากสุด"
   <br>BTN call flop ⅔ = range เต็มไปด้วย 8x/77/88/overpairs/65/T9 — <b>มือพวกนี้จ่ายเบทใหญ่ได้</b> และ board ไม่มี draw ที่จะมาแซง → ไม่ต้องกลัวอะไรเลย. Trap check เสีย value เปล่าๆ (มือเขาเช็คกลับเยอะ)
   <br><br>🏁 <b>จบมือ:</b> เราเบท 10.5 — BTN <b>check-raise jam!</b> (8♥8♦ top set). เรา snap call. River K♣ ไม่ pair บอร์ด → <b>nut straight ชนะ top set</b> เก็บ pot ~110bb 🔥`,
@@ -1430,6 +1435,7 @@ const SPOTS = [
   q:'River 5♦ — <b>บอร์ด pair = เราได้ FULL HOUSE (999-55)!</b> flush ของเขากลายเป็นเหยื่อ. ปิดยังไง?',
   opts:[{k:'call',label:'Check',sub:'induce'},{k:'shove',label:'All-in',sub:'24.1bb'}],
   best:1, ok:[0],
+  reveal:{pos:'BTN', cards:['Ah','Qh'], note:'เปิด nut flush<br>— แพ้ full house ของเรา'},
   why:`<b>เฉลย: All-in</b> — boat ของเราตอนนี้แพ้แค่ <b>4 combos จาก 990</b> (KK สาม combo + 5♠5♣ ควอดหนึ่ง combo — ยืนยันด้วย brute-force). ทุก flush ที่ตามเรามาตั้งแต่ turn <b>ต้อง call jam นี้</b> — เขามองว่ามือเขาคือ nuts ของเมื่อกี้
   <br><br>jam 24 เข้า 42 (~57% pot) คือไซส์ที่ flush "กดถูกใจ" — check-induce ได้เงินน้อยกว่าเพราะถ้าเขาเช็คกลับ = ศูนย์
   <br><br>🏁 <b>จบมือ:</b> BTN snap call ด้วย <b>A♥Q♥ (nut flush)</b> — full house ชนะ เก็บ pot ~90bb 💰 นี่คือรางวัลของการ "ไม่ slowplay set บน draw board" — pot โตทุก street พอดีจังหวะ`,
@@ -1451,6 +1457,7 @@ const SPOTS = [
   q:'A8s ที่ CO เหลือ 9bb — ทางเลือกเดียวที่ถูกคืออะไร?',
   opts:[{k:'fold',label:'Fold'},{k:'shove',label:'All-in',sub:'9bb'},{k:'raise',label:'Min-raise',sub:'2bb'}],
   best:1,
+  reveal:{pos:'BB', cards:['Kd','Qd'], note:'call แล้วเปิด<br>— pair of aces เราชนะ race'},
   why:`<b>เฉลย: All-in</b> — 9bb คือโซน push/fold บริสุทธิ์ A8s จาก CO อยู่ในตาราง jam ห่างจากเส้นมาก (Nash jam ถึง A2s สบายๆ จากตำแหน่งนี้)
   <br>Min-raise คือคำตอบที่แพงที่สุด: โดน jam กลับแล้วต้อง call ด้วย pot odds = เสียทางเลือก, โดน call แล้วเล่น postflop 7bb = ฝันร้าย. Fold = เผา equity ของมือที่ดีกว่าค่าเฉลี่ยมาก
   <br><br>🏁 <b>จบมือ:</b> BB call ด้วย K♦Q♦ (race 60/40 เราเป็นต่อ) — board J♠7♦4♠ 2♥ A♥ → <b>เราชนะ double up เป็น ~19.5bb</b> กลับมามีเกมทันที`,
@@ -1492,6 +1499,7 @@ const SPOTS = [
   q:'CO jam กลับ 24bb — ต้องจ่ายอีก 17.5 เข้า pot 31. JJ ที่ FT call ไหม?',
   opts:[{k:'fold',label:'Fold'},{k:'call',label:'Call all-in'}],
   best:1,
+  reveal:{pos:'CO', cards:['As','Ks'], note:'เปิด AK — flip<br>— JJ เรายืน, CO ตกรอบ'},
   why:`<b>เฉลย: Call</b> — ราคาคือ 17.5 เพื่อชิง 48.5 = ขอแค่ <b>36%</b>. CO jam ทับ 3bet ที่ FT = 99+/AQ+/AK ซึ่ง JJ มี ~50-52% — เกิน threshold แม้บวก ICM premium แล้ว
   <br>และอย่าลืม: <b>เรา cover เขา</b> — แพ้ก็เหลือ 4bb?? ไม่ใช่: เหลือ 28-24 = 4bb... เจ็บมากแต่ไม่ bust ในขณะที่ชนะ = เขาตกรอบ + เราขึ้น ~52bb เป็น contender ทันที. asymmetry นี้คือเหตุผลสุดท้ายที่ดัน call
   <br><br>🏁 <b>จบมือ — Showdown:</b> CO เปิด <b>A♠K♠</b> (flip คลาสสิก เราเป็นต่อนิดๆ). Board 9♦6♦2♣ 8♥ 4♠ — ไม่มี A ไม่มี K → <b>JJ ยืน! CO ตกรอบอันดับ 6</b> เราขึ้น 52bb ลุ้นแชมป์เต็มตัว`,
@@ -1553,6 +1561,7 @@ const SPOTS = [
   q:'CO <b>check-raise เป็น 22</b> ใน 3bet pot! TPTK ของเราโดนทดสอบ — fold, call หรือ jam?',
   opts:[{k:'fold',label:'Fold'},{k:'call',label:'Call',sub:'+14bb'},{k:'shove',label:'All-in'}],
   best:1, ok:[2],
+  reveal:{pos:'CO', cards:['Ks','Js'], note:'เปิด monster draw ที่พลาดหมด<br>— AQ เราชนะ'},
   why:`<b>เฉลย: Call</b> — check-raise ใน 3bet pot บน Q♠T♠4♥ = range เขาคือ <b>draw หนักๆ เป็นส่วนใหญ่</b> (spade combos, KJ, J9s) ปนกับ value จริงไม่กี่ตัว (QT/44/TT). TPTK ของเราอยู่หน้า range นั้น — fold คือยอมแพ้ equity ที่เราจ่ายมาแล้ว, jam ก็ได้ (ok) แต่ call ให้เขา barrel bluff ต่อพลาดๆ
   <br><br>🏁 <b>จบมือ:</b> turn 2♦ CO jam ที่เหลือ 18 เข้า pot ~64 — ราคาบังคับ call ชัด (ขอ ~18%). River 7♣. CO เปิด <b>K♠J♠</b> — flush draw + open-ender ที่<b>พลาดทุกทาง</b> → <b>AQ ชนะ pot ~110bb</b>
   <br>มือ monster draw ของเขามี equity เกือบ 50% ตอน flop — เขาเล่นไม่ผิด เราแค่ยืนระยะถูกและการ์ดเข้าข้าง`,
@@ -1593,6 +1602,7 @@ const SPOTS = [
   q:'SB 3-bet เป็น 8bb (เขาเหลือ 28 — เราคุมเขา) — AKo ตอบยังไง?',
   opts:[{k:'fold',label:'Fold'},{k:'call',label:'Call',sub:'5.7bb'},{k:'shove',label:'All-in',sub:'30bb'}],
   best:2, ok:[1],
+  reveal:{pos:'SB', cards:['Qh','Qc'], note:'เปิด QQ — flip<br>— top pair K เราชนะ, bubble แตก'},
   why:`<b>เฉลย: All-in</b> — AK ที่ 28bb effective เจอ 3bet = jam ตามตำรา: (1) fold equity ใส่ 99-JJ/AQ ที่ต้อง fold หรือ call แบบผิด (2) เมื่อโดน call เราไม่เคยแย่กว่า flip (3) <b>เราคุมเขา</b> — แพ้ก็ไม่ bust, เขาแพ้ = bust บน bubble
   <br>ICM ทำงาน<b>ให้เรา</b>ที่นี่: แรงกดทั้งหมดอยู่ฝั่งเขา
   <br><br>🏁 <b>จบมือ — Showdown:</b> SB call ทั้งกองด้วย <b>Q♥Q♣</b> (flip 46/54 เราเป็นรองนิด). Board K♦7♣2♥ T♠ 3♦ — <b>top pair K! SB bust = BUBBLE แตก ทุกคนเข้าเงิน 🎉</b> เราขึ้น ~58bb เป็น chip leader โซนนี้`,
@@ -1655,9 +1665,10 @@ const SPOTS = [
   q:'Turn Q♥ — <b>TOP TWO PAIR!</b> SB barrel ต่อ ⅔ pot. ถึงเวลาหรือยัง?',
   opts:[{k:'fold',label:'Fold'},{k:'call',label:'Call',sub:'8bb'},{k:'raise',label:'Raise',sub:'22bb'}],
   best:2, ok:[1],
+  reveal:{pos:'SB', cards:['Ah','Qd'], note:'เปิด top pair top kicker<br>— แพ้ top two ของเรา'},
   why:`<b>เฉลย: Raise</b> — turn Q ทำให้เราแซงทุกมือที่ barrel: AQ/KQ (top pair), QT, JT, T9 (draw). ตอนนี้แหละคือจังหวะปั้น pot — เขาเพิ่งเบทบอกว่ามีของ และ Q คือใบที่ "ช่วยเขา" ในสายตาเขา
   <br>call อีกก็ได้ (ok) แต่ river อาจ check จบ — เสียโอกาสรีด stack จาก AQ/KQ ที่ไม่หนีแล้ว
-  <br><br>🏁 <b>จบมือ:</b> SB call 22 ด้วย A♥Q♥ (top pair top kicker — เขาหนีไม่ได้แล้วจริงๆ). River 4♣ brick, SB check, เราเบทที่เหลือ 12 — SB call. <b>Top two ชนะ เก็บ pot ~64bb</b>`,
+  <br><br>🏁 <b>จบมือ:</b> SB call 22 ด้วย A♥Q♦ (top pair top kicker — เขาหนีไม่ได้แล้วจริงๆ). River 4♣ brick, SB check, เราเบทที่เหลือ 12 — SB call. <b>Top two ชนะ เก็บ pot ~64bb</b>`,
   deep:`<b>เจาะลึก / Hand recap</b><br>
   <b>• Raise turn ตรงนี้สอนอะไร:</b> มือ medium (top pair) เล่น passive เก็บ bluff / มือ strong (two pair+) สลับเป็น aggressive ตอน "การ์ดที่เข้าทาง range เขา" มา — Q คือใบที่เขาคิดว่าเขานำ
   <br><b>• ยืนยัน:</b> verifier บน J83Q4: แพ้แค่ T9 (straight ×16) + sets — AQ/KQ/QT จ่ายเราเต็มๆ
@@ -1744,6 +1755,7 @@ const SPOTS = [
   q:'River A♠ — ใบที่เราไม่อยากเห็นที่สุด. CO jam ทั้งกองที่เหลือของเรา — 88 call หรือ fold?',
   opts:[{k:'fold',label:'Fold'},{k:'call',label:'Call all-in'}],
   best:0,
+  reveal:{pos:'CO', cards:['Ac','3c'], note:'โชว์ wheel (A-2-3-4-5)<br>— fold ของเราถูกต้อง'},
   why:`<b>เฉลย: Fold (ไม่ใกล้เคียงด้วยซ้ำ)</b> — A♠ คือหายนะสามชั้นสำหรับ 88:
   <br>(1) ทุก <b>Ax ที่ barrel มาตลอด</b> เพิ่งแซงเรา — และ Ax คือส่วนใหญ่ของ range เขา
   <br>(2) โหดกว่านั้น: บอร์ด 7-5-2-4-A ทำให้ <b>ใบ 3 ใบเดียวในมือเขา = wheel</b> (A-2-3-4-5) — brute-force: มือที่บีตเรามี 391 combos โดย straight 5-high อย่างเดียว ×154!
@@ -1804,6 +1816,7 @@ const SPOTS = [
   q:'MP call 4bet. Flop K♠9♥3♦ ใน pot 39.5 (SPR ~2) — AA เล่นยังไง?',
   opts:[{k:'call',label:'Check',sub:'trap'},{k:'raise',label:'C-bet',sub:'⅓ (13)'}],
   best:1, ok:[0],
+  reveal:{pos:'MP', cards:['Qh','Qc'], note:'เปิด QQ ที่ overplay<br>— AA เราชนะ pot ยักษ์'},
   why:`<b>เฉลย: C-bet ⅓</b> — SPR ~2 ใน 4bet pot = เงินจะลงหมดอยู่แล้ว แค่หาทางที่เนียนที่สุด. เบท ⅓ ให้ QQ/JJ "ทนไม่ไหวแต่ก็ fold ไม่ลง" และให้ AK ตามมาเต็มก้อน
   <br><br>🏁 <b>จบมือ:</b> เราเบท 13 — MP <b>jam 86bb!</b> (overplay คลาสสิกของ QQ ที่ "เบื่อโดน K ขู่"). เรา snap call. MP เปิด <b>Q♥Q♣</b>. Turn 6♠ river 2♦ — <b>AA ยืน เก็บ pot ~200bb</b> 🚀 เกือบ double ตั้งแต่ early stage
   <br><br>สังเกต: เราไม่ได้ทำอะไรพิสดารเลยทั้งมือ — เปิดปกติ, 4bet ปกติ, เบทปกติ. มือใหญ่ + line ตรงไปตรงมา = เงินเข้าเอง`,
@@ -1868,6 +1881,7 @@ const SPOTS = [
   q:'เช็คกันมาสองสตรีท (A74-8-3) — river CO เพิ่งเบท 14. KK call ไหม?',
   opts:[{k:'fold',label:'Fold'},{k:'call',label:'Call',sub:'14bb'}],
   best:1,
+  reveal:{pos:'CO', cards:['Jh','Th'], note:'เปิด float ที่พลาดทุกอย่าง<br>— KK จับ bluff สำเร็จ'},
   why:`<b>เฉลย: Call</b> — อ่าน line เขา: ถ้ามี Ax จริง <b>ทำไมเช็คผ่าน flop และ turn ทั้งสองครั้ง?</b> Ax ใน squeeze pot อยากเบทเก็บ value ก่อน river. การตื่นมาเบทตอนใบสุดท้ายหลังเงียบสองสตรีท = มือที่ "เพิ่งตัดสินใจว่าต้องชนะด้วยการเบท" — bluff หนักๆ
   <br>เราบีตทุก bluff (JJ/TT/QJ/KQ ที่ float) และราคา 14 เข้า 53 ขอแค่ ~26%
   <br><br>🏁 <b>จบมือ:</b> CO โชว์ <b>J♥T♥</b> — float ที่พลาดทุกอย่างแล้วขอ stab เดียวจบ. <b>KK เก็บ pot ~53bb</b> ด้วยการ "ไม่ทำอะไรเลย" สองสตรีทแล้ว call เดียว`,
@@ -1933,6 +1947,7 @@ const SPOTS = [
   q:'Turn 4♣ — <b>เราได้ FLUSH (T-high) + straight!</b> BB จู่ๆ jam ที่เหลือทั้งหมด (11.8) — call ใช่ไหม?',
   opts:[{k:'fold',label:'Fold'},{k:'call',label:'Call all-in'}],
   best:1,
+  reveal:{pos:'BB', cards:['7h','7s'], note:'เปิด set of sevens<br>— แพ้ flush เรา, bubble แตก'},
   why:`<b>เฉลย: Call (เร็วๆ)</b> — turn 4♣ เติมให้เราสองชั้น: club flush + straight 3-4-5-6-7. brute-force ยืนยัน: มีแค่ <b>28 combos จาก 990</b> ที่บีตเรา (flush ที่สูงกว่าเท่านั้น)
   <br>BB jam 11.8 เข้า 24.7 หลังจาก check-call มา = มือประเภท top pair ที่ "พอแล้ว ขอวัดเลย", two pair, set, หรือ A♣X semibluff — เกือบทั้งหมดแพ้เราแล้ว. ราคา 11.8 เข้า 36.5 ขอ ~32% — เรามีเกิน 90%
   <br><br>🏁 <b>จบมือ:</b> BB เปิด <b>7♥7♠ (set of sevens)</b> — ต้องการ board pair เท่านั้น. River 9♥ เปล่า → <b>flush ชนะ BB bust = BUBBLE แตก!</b> โต๊ะปรบมือ ทุกคนเข้าเงิน — และเราขึ้น ~75bb 👑`,
@@ -1955,6 +1970,7 @@ const SPOTS = [
   q:'TT ใน BB, 16bb, FT เหลือ 4 คน — BTN (chip leader) เปิดมา. ตัดสินใจ?',
   opts:[{k:'fold',label:'Fold'},{k:'call',label:'Call',sub:'1.2bb'},{k:'shove',label:'All-in',sub:'16bb'}],
   best:2, ok:[1],
+  reveal:{pos:'BTN', cards:['Ad','Kh'], note:'เปิด AK — race<br>— TT เรายืน, double up'},
   why:`<b>เฉลย: All-in</b> — TT 16bb vs BTN steal (เปิดกว้างมากตอน 4-handed) = rejam ทุกตำรา ทุก solver ทุก ICM model. มือเราแข็งเกิน fold ชัด และ flat OOP คือเชิญ flop overcard มาทำลายมือ (A/K/Q/J ลง ~57% ของ flop)
   <br>jam บังคับ BTN ทิ้ง steal ทั้งหมด (เก็บ 3.7 ฟรี) หรือ call แบบเป็นรอง
   <br><br>🏁 <b>จบมือ:</b> BTN call ด้วย A♦K♥ (ราคาบังคับเขา). Board 6♠5♦2♦ Q♣ 3♣ — sweat ทุกใบ... <b>TT ยืน! double เป็น ~33bb</b> ขึ้นอันดับ 2 ทันที — จาก "รอตาย" เป็น "ล่าแชมป์" ในมือเดียว`,
@@ -2016,6 +2032,7 @@ const SPOTS = [
   q:'BB <b>check-raise ALL-IN 42bb!</b> — KK ต้องจ่ายอีก 30 เข้า pot 90.5. ใจสั่นแต่... ?',
   opts:[{k:'fold',label:'Fold'},{k:'call',label:'Call all-in'}],
   best:1,
+  reveal:{pos:'BB', cards:['Ah','4h'], note:'เปิด nut flush draw ที่พลาด<br>— KK เราชนะ'},
   why:`<b>เฉลย: Call (เลขไม่ให้ fold)</b> — ราคา 30 เพื่อชิง 120.5 = ขอแค่ <b>25%</b>. มือเดียวที่ทำให้เราเป็นรองหนักคือ QQ (set) ซึ่งมี 3 combos — ในขณะที่ range jam ของ aggro ตรงนี้เต็มไปด้วย: A♥X♥ (nut FD ~จำนวนมาก), AQ (top pair), JJ/TT ที่จาม, AK panic
   <br>vs range นั้น KK มี ~65-70% — fold คือให้ความกลัวเซ็นเช็ค
   <br><br>🏁 <b>จบมือ:</b> BB เปิด <b>A♥4♥</b> — nut flush draw (เขามี ~38%, เล่นไม่ผิดด้วย fold equity). Turn 9♦... river 7♣ — <b>หัวใจไม่มา! KK เก็บ pot ~120bb</b> เป็น big stack ของโต๊ะทันที`,
@@ -2100,6 +2117,7 @@ const SPOTS = [
   q:'River 2♦ — <b>15 outs พลาดเกลี้ยง</b> เหลือ J-high. CO เช็คมา. pot 70 เราเหลือ 35.7 — ยอมหรือยิง?',
   opts:[{k:'call',label:'Check',sub:'ยอมแพ้'},{k:'shove',label:'All-in',sub:'35.7bb'}],
   best:1,
+  reveal:{pos:'CO', cards:['Kd','9d'], note:'fold top pair แล้วหงายไพ่<br>— bluff เราสำเร็จ'},
   why:`<b>เฉลย: All-in</b> — ตรรกะเดิมจาก Hand 4 แต่ stake สูงกว่า: J-high ชนะอะไรที่ showdown? <b>ไม่มี</b> (brute-force: แพ้ 701/990 — ทุก pair บีตเรา). check = ยกธง 70bb ทิ้ง
   <br>ในขณะที่ story เราตรงเป๊ะทุกตัวอักษร: raise flop + barrel turn + jam river บน K♣Q♣ = "ผมมี KQ/sets/AK มาตลอด" และมือเขา (Kx อ่อน, Qx, JJ) เจอ jam 36 เข้า 70 ต้อง call 25% ของ stack ด้วย bluff-catcher... หลังเราโชว์ความแข็งสามสตรีท
   <br><br>🏁 <b>จบมือ:</b> CO เข้า tank ยาว... ทิ้ง <b>K♦9♦ (top pair!)</b> หงายขึ้นมาด้วยความภูมิใจ — เราเก็บ pot 70bb เงียบๆ ไม่ต้องโชว์อะไร 🎭`,
@@ -2188,6 +2206,7 @@ const SPOTS = [
   q:'River K♣ — <b>club ใบที่สาม</b> และ SB jam ก้อนสุดท้ายของเรา (10bb). ราคาดีมาก (ขอ 20%)... call ไหม?',
   opts:[{k:'fold',label:'Fold'},{k:'call',label:'Call all-in'}],
   best:0, ok:[1],
+  reveal:{pos:'SB', cards:['Qc','Jc'], note:'โชว์ flush<br>— fold ของเราถูกต้อง'},
   why:`<b>เฉลย: Fold (แผนที่วางไว้ — execute)</b> — นี่คือใบที่เราทำสัญญาไว้ตั้งแต่ turn. K♣ ทำสามอย่างพร้อมกัน: เติม <b>club flush</b>, เพิ่ม Kx ที่ไล่ตามมา, และทำให้ AT ของเราแพ้แม้แต่ AJ ที่... ไม่ — AT ยังบีต AJ ไม่ได้อยู่แล้ว ประเด็นคือ: <b>มือที่ barrel สองสตรีทแล้ว jam บนใบ flush = value ล้นทะลัก</b> (Q♣J♣/club combos ที่ semi-bluff มาตลอด — ตอนนี้คือ nuts ของเขา)
   <br>ราคา 20% ล่อใจมาก แต่ bluff ที่เหลือใน range เขาต่ำกว่านั้น และนี่คือ 10bb สุดท้ายตอน bubble — แพ้ = ศูนย์บาท ทุกคนที่เหลือเข้าเงิน
   <br><br>🏁 <b>จบมือ — fold:</b> SB โชว์ <b>Q♣J♣ (flush)</b> — semibluff ที่วิ่งมาตลอดทางแล้วเข้าเส้นชัย. เราเสีย 15bb เหลือ 10bb... <b>เจ็บ แต่ยังมีชีวิต — และอีก 2 มือถัดมามีคน bust แทนเรา: เข้าเงิน 🎉</b>`,
@@ -2224,6 +2243,7 @@ const SPOTS = [
   q:'BTN 3-bet เป็น 6 — QQ ที่ 25bb ตอบยังไง?',
   opts:[{k:'fold',label:'Fold'},{k:'call',label:'Call',sub:'3.8bb'},{k:'shove',label:'All-in',sub:'25bb'}],
   best:2, ok:[1],
+  reveal:{pos:'BTN', cards:['Ad','Kd'], note:'เปิด AK — flip<br>— QQ เรายืน, double up'},
   why:`<b>เฉลย: All-in</b> — QQ ที่ 25bb เจอ 3bet = jam ไม่ต้องคิดเยอะ: (1) นำ range 3bet ของ BTN ห่าง (AQ/AJ/KQ/TT/99/bluffs) (2) flat แล้ว A หรือ K ทับ flop ~40% — เปลี่ยนมือ premium เป็นปริศนา (3) fold equity เพิ่ม EV อีกชั้น
   <br>มือที่บีตเรา (KK/AA) ก็ต้องเจออยู่ดี — นั่นคือ cooler ไม่ใช่เหตุผลให้เล่นอ้อม
   <br><br>🏁 <b>จบมือ:</b> BTN call ด้วย <b>A♦K♦</b> — flip ฝั่งเรา 54%. Board 8♣4♥2♥ J♦ 9♠ ไม่มี A/K → <b>QQ ยืน double เป็น ~51bb!</b>`,
@@ -2285,6 +2305,7 @@ const SPOTS = [
   q:'BB check-raise เป็น 9! เราเหลือ 14.5 หลังเบท — fold, call หรือใส่หมด?',
   opts:[{k:'fold',label:'Fold'},{k:'call',label:'Call',sub:'5.7bb'},{k:'shove',label:'All-in',sub:'14.5bb'}],
   best:2, ok:[1],
+  reveal:{pos:'BB', cards:['Kd','Td'], note:'เปิด 15-out draw ที่พลาดหมด<br>— AQ เราชนะ'},
   why:`<b>เฉลย: All-in</b> — check-raise บน Q♦J♦8♣ = <b>draw มากกว่า made hand</b> โดยธรรมชาติของบอร์ด (T9/KT/เพชร/combo มี "สิทธิ์ raise" มากกว่า two pair ที่มักจะ call). TPTK ของเรานำ range นั้น
   <br>ที่ 20bb ทางเลือกจริงมีสองทาง: jam หรือ fold — และ fold TPTK ให้บอร์ดที่ "เขามี draw ครึ่ง range" คือ over-fold มหาศาล. <b>jam = deny equity เต็มก้อน</b>: draw ของเขาต้องจ่ายราคาเต็มเพื่อดูสองใบ
   <br><br>🏁 <b>จบมือ:</b> BB call ด้วย <b>K♦T♦</b> — open-ender + flush draw (15 outs, 49/51 แทบ flip!). Turn 2♠... river 4♣ — <b>พลาดทุกใบ! AQ เก็บ pot ~41bb</b> ขยับขึ้น top-3 ของ FT 💪`,
@@ -2347,6 +2368,7 @@ const SPOTS = [
   q:'CO call (BTN หนี). Turn 9♥ — <b>STRAIGHT เข้าแล้ว!</b> (9-8-7-6-5) เหลือ 26.6 ใส่ยังไง?',
   opts:[{k:'call',label:'Check',sub:'trap'},{k:'shove',label:'All-in',sub:'26.6bb'}],
   best:1,
+  reveal:{pos:'CO', cards:['As','Ac'], note:'เปิด AA<br>— แพ้ straight ของเรา'},
   why:`<b>เฉลย: All-in</b> — straight เข้าบนใบที่ "ดูไม่มีพิษ" ในสายตา overpair. jam 26.6 เข้า 43.7 — AA/KK/sets ของ CO ที่ทนการ check-raise มาแล้วหนึ่งรอบ ไม่หนีตอนนี้ (เขามองว่าเราอาจ semibluff ต่อ)
   <br>trap check เสี่ยงเขาเช็คกลับ + ใบ river เพชร/pair ทำเรื่องยุ่ง — เก็บตอนนี้ที่ equity เราพีคสุด
   <br><br>🏁 <b>จบมือ:</b> CO call ด้วย <b>A♠A♣</b> (overpair ที่ "ทนมามากพอแล้ว"). River T♦ — เติม <b>flush ให้เราอีกชั้น</b> (กันเอง 555?? ไม่ต้องกัน — straight ก็พอ). <b>เก็บ pot ~97bb!</b> มือ 87s ที่ราคา 1.4 ทำเงิน 50bb+ 🎆`,
@@ -2408,6 +2430,7 @@ const SPOTS = [
   q:'BB check-raise เป็น 10 — TP + flush draw ของเรา ตอบยังไง?',
   opts:[{k:'fold',label:'Fold'},{k:'call',label:'Call',sub:'6.8bb'},{k:'shove',label:'All-in',sub:'27.8bb'}],
   best:1, ok:[2],
+  reveal:{pos:'BB', cards:['8d','8c'], note:'เปิด set of eights<br>— cooler, เราเล่นถูกแล้ว'},
   why:`<b>เฉลย: Call (และพร้อมไปจนสุด)</b> — top pair ดี + flush draw vs check-raise: มือเราแข็งเกิน fold ในทุกจักรวาล (vs sets เรายังมี ~38%, vs draws/worse Kx เรานำขาด). call เก็บ range เขาไว้กว้าง — jam ก็ได้ (ok)
   <br><br>🏁 <b>จบมือ:</b> turn 2♣ BB jam — ราคา + equity บังคับ call (เหลือ 17.8 เข้า pot ~43). River 6♠ ไม่ใช่หัวใจ. BB เปิด <b>8♦8♣ — SET</b> → <b>เราตกรอบอันดับ 3</b> 💔
   <br><br>หยุดก่อนจะ tilt: ย้อนดูทุกการตัดสินใจ — เปิด KJs ✓ เบท TP+FD ✓ ไม่ fold ต่อ check-raise ✓ call jam ด้วย odds ✓. <b>มือนี้เล่นใหม่ 100 ครั้งก็เล่นแบบนี้ทุกครั้ง</b> — อันดับ 3 ที่ได้เงินจริง ดีกว่าอันดับ 3 ที่ได้จากการหนีทุก confrontation จน blind หมด`,
@@ -2488,6 +2511,7 @@ const SPOTS = [
   q:'BTN call 40. Turn 2♥ brick. pot 88 เราเหลือ 77.5 — จบมันเลยไหม?',
   opts:[{k:'call',label:'Check',sub:'ระวัง KT'},{k:'shove',label:'All-in',sub:'77.5bb'}],
   best:1, ok:[0],
+  reveal:{pos:'BTN', cards:['Qs','Jd'], note:'เปิด top two<br>— แพ้ set ของเรา, pot ยักษ์'},
   why:`<b>เฉลย: All-in</b> — SPR เหลือไม่ถึง 1 — เงินลงหมดแน่นอนอยู่แล้ว คำถามเดียวคือใครเป็นคนใส่. jam เองดีกว่า: (1) KT ที่ทำ straight แล้วต้อง call อยู่ดี — เราเสียเท่ากันทุกทาง (2) แต่ QJ/AQ/AhQh ที่ลังเล <b>ต้องตัดสินใจตอนนี้โดยไม่มีใบฟรี</b>
   <br>check ด้วยความกลัว KT = ให้ใบฟรีกับ draw ทุกตัวที่ยอม check กลับ
   <br><br>🏁 <b>จบมือ:</b> BTN tank ยาวมาก... call ด้วย <b>Q♠J♦ (top two!)</b> — เขาคิดว่าเขานำ. River A♣ ไม่ช่วยใคร → <b>SET OF FIVES เก็บ pot ~240bb!</b> double-up ยักษ์ตั้งแต่ early — จากมือ 55 ราคา 2.5bb 💎`,
@@ -2527,6 +2551,7 @@ const SPOTS = [
   q:'MP (50bb big stack) 3-bet — AKs 17bb ตอน bubble. ถอยหรือสู้?',
   opts:[{k:'fold',label:'Fold'},{k:'call',label:'Call',sub:'3.8bb'},{k:'shove',label:'All-in',sub:'17bb'}],
   best:2,
+  reveal:{pos:'MP', cards:['Js','Jc'], note:'เปิด JJ — race<br>— AK ตีเอซ เราชนะ'},
   why:`<b>เฉลย: All-in</b> — ใช่ เขา cover เรา ใช่ มัน bubble — แต่ AKs vs 3bet ที่ 17bb คือ jam ในทุกตำรา ICM: (1) fold = ทิ้ง 2.2 + ปล่อยให้ blinds กินเราต่อจนมือถัดไปแย่กว่านี้ (2) flat OOP เหลือ 15bb ใน pot 13 = เล่นไม่เป็น (3) jam: เขา fold บ่อยพอ + เมื่อ call เราแย่สุดแค่ flip
   <br>"survival" ที่แท้จริงไม่ใช่การหนีทุก confrontation — คือการเลือก confrontation ที่เรา +EV
   <br><br>🏁 <b>จบมือ:</b> MP call ด้วย <b>J♠J♣</b> (race แท้ 50/50). Board <b>A♠</b>9♥3♣ 6♦ 2♠ — เอซมาใบแรกจบเกม! <b>Double เป็น ~36bb</b> ทะยานขึ้นกลุ่มนำ — bubble ที่เหลือกลายเป็นเวลาเก็บเหยื่อของเรา`,
@@ -2587,6 +2612,7 @@ const SPOTS = [
   q:'BTN เช็ค turn กลับ. River 2♦ (T66-8-2). ตาเราก่อน — เช็คจบ หรือรีดอีกหยด?',
   opts:[{k:'call',label:'Check'},{k:'raise',label:'Bet',sub:'½ (4)'},{k:'raise',label:'Bet',sub:'pot (8)'}],
   best:1, ok:[0],
+  reveal:{pos:'BTN', cards:['9s','8s'], note:'call แล้วเปิด pair 8<br>— thin value เก็บสำเร็จ'},
   why:`<b>เฉลย: Bet ½ (thin value)</b> — BTN เช็ค turn = ลบมือแข็งออกเกือบหมด (6x/overpair เบทไปแล้ว). เหลืออะไร? Ax/K-high ที่อยาก showdown, 9x/88, T ที่ kicker แย่กว่า — <b>หลายมือในนั้น call เบทครึ่ง pot "เผื่อเรา bluff"</b>
   <br>เช็คจบก็ "ไม่ผิด" (ok) แต่ทิ้งเงินบนโต๊ะทุกครั้งที่เขาถือ T9/88/A-high ที่ใจอ่อน — รีดหยดเล็กพันครั้ง = stack ที่คนอื่นไม่มี
   <br><br>🏁 <b>จบมือ:</b> BTN call ด้วย <b>9♠8♠</b> (คู่ 8 ที่ "ขอดูหน่อยเผื่อ float") → <b>KT เก็บ pot 16bb</b> — เพิ่มมา 4bb ที่ผู้เล่นส่วนใหญ่ไม่เคยเก็บ`,
@@ -2650,6 +2676,7 @@ const SPOTS = [
   q:'BB check-raise เป็น 9 — มือชิงแชมป์อยู่ตรงหน้า. fold / call / หรือใส่หมดเลย?',
   opts:[{k:'fold',label:'Fold'},{k:'call',label:'Call',sub:'6bb'},{k:'shove',label:'All-in',sub:'42.8bb'}],
   best:1, ok:[2],
+  reveal:{pos:'BB', cards:['Ah','5h'], note:'เปิด bluff ที่วิ่งสุดทาง<br>— flush เราชนะ 🏆 CHAMPION!'},
   why:`<b>เฉลย: Call</b> — HU check-raise range กว้างมหาศาล (ทุก draw, ทุก pair, อากาศเพียบ) — TP+FD ของเราอยู่<b>เหนือ</b> range นั้นชัด. call ปล่อยให้เขา barrel ต่อด้วยมือที่แพ้เรา (jam ก็ได้ — ok — แต่ไล่ bluff เขาหมด)
   <br><br>🏁 <b>จบมือ — THE CHAMPIONSHIP:</b> Turn <b>2♦ — FLUSH!</b> BB jam ทั้งหมดด้วย A♥5♥ (gutshot + overcard — bluff สุดทาง). เรา snap call. River 8♠ เปล่า...
   <br><br><b>🏆🏆 CHAMPION! Q-high flush ชนะ — จบทัวร์อันดับ 1!</b> จาก 30 hands ของการฝึก: เปิดให้ถูก, เบทให้ตรง, อ่าน line ให้ขาด, ทิ้งให้เป็น, แล้ววันที่การ์ดเข้าข้าง — เก็บให้ครบ. GG! 🎉`,

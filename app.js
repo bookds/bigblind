@@ -172,14 +172,6 @@
     const eng = potEngine(spot);
     const stackMap = {}; (spot.stacks||[]).forEach(([p,bb])=> stackMap[p]=bb);
 
-    // header สรุป: ตำแหน่งคุณ + pot ปัจจุบัน + ยอดต้องจ่าย
-    const hd=document.createElement('div'); hd.className='log-head';
-    hd.innerHTML =
-      `<div class="lh pos"><small>คุณ</small> ${spot.heroLine}</div>` +
-      `<div class="lh pot"><small>POT</small> ${spot.pot}bb</div>` +
-      (spot.toCall ? `<div class="lh call"><small>ต้องจ่าย</small> ${spot.toCall}bb</div>` : '');
-    log.appendChild(hd);
-
     // stacks ของผู้เล่นที่อยู่ในมือ (คู่แข่ง + เรา) — มีผลต่อการตัดสินใจ
     if(Array.isArray(spot.stacks) && spot.stacks.length){
       const sr=document.createElement('div'); sr.className='stacks';
@@ -206,6 +198,15 @@
       if(st.note){ const n=document.createElement('div'); n.className='st-note'; n.textContent=st.note; row.appendChild(n); }
       log.appendChild(row);
     });
+
+    // สรุปสถานการณ์ปัจจุบัน (ท้าย history — ใกล้จุดตัดสินใจ): ตำแหน่งคุณ + pot + ยอดต้องจ่าย
+    const hd=document.createElement('div'); hd.className='log-head';
+    hd.innerHTML =
+      `<div class="lh pos"><small>คุณ</small> ${spot.heroLine}</div>` +
+      `<div class="lh pot"><small>POT</small> ${spot.pot}bb</div>` +
+      (spot.toCall ? `<div class="lh call"><small>ต้องจ่าย</small> ${spot.toCall}bb</div>` : '');
+    log.appendChild(hd);
+
     log.scrollTop = log.scrollHeight;
     $('turn').innerHTML = `<span class="tdot"></span><span>${spot.q}</span>`;
   }
@@ -255,6 +256,17 @@
 
     const bestLabel = spot.opts[spot.best].label + (spot.opts[spot.best].sub?` (${spot.opts[spot.best].sub})`:'');
     vbest.innerHTML = isBest ? '' : `ทางที่ดีที่สุด: <b>${bestLabel}</b>`;
+
+    // เปิดไพ่คู่ต่อสู้ (showdown หรือ fold-หงาย) — เฉพาะ spot ที่มีข้อมูล reveal
+    const rv = $('reveal');
+    if(spot.reveal && spot.reveal.cards){
+      rv.style.display='flex'; rv.innerHTML='';
+      const lab=document.createElement('div'); lab.className='rlab';
+      lab.innerHTML = `🃏 <b>${spot.reveal.pos}</b><br>${spot.reveal.note||'เปิดไพ่'}`;
+      const rc=document.createElement('div'); rc.className='rcards';
+      spot.reveal.cards.forEach(c=> rc.appendChild(cardEl(c, true)));
+      rv.appendChild(rc); rv.appendChild(lab);
+    } else { rv.style.display='none'; rv.innerHTML=''; }
 
     $('explain').innerHTML = spot.why;
     // reset deep "why" panel each time the sheet opens
