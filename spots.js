@@ -556,10 +556,10 @@ const SPOTS = [
 },
 {
   id:'ph6', cat:'postflop',
-  stage:'Mid Stage', stack:'34bb',
+  stage:'Mid Stage', stack:'35bb',
   pot:57, toCall:12,
   board:['6h','5h','4c','9d','8c'], hero:['Ah','Ad'], heroLine:'BTN',
-  stacks:[['BTN',34],['BB',32]],
+  stacks:[['BTN',35],['BB',35]],
   streets:[{name:'Preflop', acts:[{pos:'YOU', a:'raise', amt:'2.5'},{pos:'BB', a:'call'}]},{name:'Flop', acts:[{pos:'BB', a:'check'},{pos:'YOU', a:'cbet', amt:'3'},{pos:'BB', a:'call'}]},{name:'Turn', acts:[{pos:'BB', a:'check'},{pos:'YOU', a:'bet', amt:'7'},{pos:'BB', a:'call'}]},{name:'River', acts:[{pos:'BB', a:'check'},{pos:'YOU', a:'bet', amt:'10'},{pos:'BB', a:'shove', amt:'22'}]}],
   q:'AA บน BTN, บอร์ด 6♥5♥4-9-8 (straight-heavy). เราเบท 3 streets, BB check-raise jam ที่ river — call หรือ fold?',
   opts:[ {k:'fold',label:'Fold'}, {k:'call',label:'Call all-in'} ],

@@ -193,7 +193,8 @@
       (st.acts||[]).forEach((a,ai)=>{
         const p = a.pos==='YOU' ? heroPos : a.pos;
         const committed = eng.rowsPerStreet[si][ai];
-        const remain = (committed!=null && stackMap[p]!=null) ? stackMap[p]-committed : null;
+        // โชว์ stack คงเหลือเฉพาะเมื่อ replay เชื่อถือได้ (pot ตรง) — เลี่ยงเลขขัดกันใน legacy spot
+        const remain = (eng.ok && committed!=null && stackMap[p]!=null) ? stackMap[p]-committed : null;
         row.appendChild(pill(a, heroPos, remain));
       });
       if(st.note){ const n=document.createElement('div'); n.className='st-note'; n.textContent=st.note; row.appendChild(n); }
