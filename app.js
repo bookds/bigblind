@@ -149,7 +149,8 @@
     });
     return { startPots, rowsPerStreet,
              ok: Math.abs(pot - (spot.pot||0)) <= 0.6,    // pot field ตรงกับ action → เชื่อถือได้
-             finalPot:+pot.toFixed(2) };
+             finalPot:+pot.toFixed(2),
+             heroToCall:+Math.max(0, curBet-(commit[heroPos]||0)).toFixed(2) };  // hero ค้างจ่ายเท่าไร
   }
   // ===POT-ENGINE-END===
 

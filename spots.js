@@ -68,12 +68,12 @@ const SPOTS = [
 {
   id:'pf3', cat:'preflop',
   stage:'Mid Stage', stack:'30bb',
-  pot:3.7, toCall:1.5,
+  pot:3.7, toCall:1.2,
   hero:['Kd','Qd'], heroLine:'BB • 30bb',
   stacks:[['BTN',38],['BB',30]],
   streets:[{name:'Preflop', acts:[{pos:'BTN', a:'raise', amt:'2.2'},{pos:'SB', a:'fold'}]}],
   q:'KQs ใน BB เจอ BTN เปิด 2.2bb จะทำอย่างไร?',
-  opts:[ {k:'fold',label:'Fold'}, {k:'call',label:'Call',sub:'1.5bb'}, {k:'raise',label:'3-Bet',sub:'9bb'} ],
+  opts:[ {k:'fold',label:'Fold'}, {k:'call',label:'Call',sub:'1.2bb'}, {k:'raise',label:'3-Bet',sub:'9bb'} ],
   best:2, ok:[1],
   why:`<b>เฉลย: 3-Bet (Call รับได้)</b> — KQs แข็งพอที่จะ 3bet เพื่อ value เจอ steal range กว้างของ BTN
   เรา dominate มืออย่าง KJ/KT/QJ และมี equity ดีแม้โดน 4bet
@@ -145,12 +145,12 @@ const SPOTS = [
 {
   id:'pf7', cat:'preflop',
   stage:'Mid Stage', stack:'50bb',
-  pot:8.2, toCall:6.5,
+  pot:8.5, toCall:1.5,
   hero:['9c','9d'], heroLine:'BB • 50bb',
   stacks:[['CO',55],['BTN',62],['SB',38],['BB',50]],
   streets:[{name:'Preflop', acts:[{pos:'CO', a:'raise', amt:'2.5'},{pos:'BTN', a:'call'},{pos:'SB', a:'call'}]}],
   q:'99 ใน BB เจอ CO เปิด + BTN call + SB call (multiway)',
-  opts:[ {k:'fold',label:'Fold'}, {k:'call',label:'Call',sub:'6.5bb'}, {k:'raise',label:'Squeeze',sub:'14bb'} ],
+  opts:[ {k:'fold',label:'Fold'}, {k:'call',label:'Call',sub:'1.5bb'}, {k:'raise',label:'Squeeze',sub:'14bb'} ],
   best:1, ok:[2],
   why:`<b>เฉลย: Call (set-mine + realize equity)</b> — พอตเป็น multiway (3 คนลงแล้ว) และเราได้ราคาดีมากใน BB
   99 เล่น call เพื่อเห็นฟลอปถูกๆ ถ้าเจอ set (~12%) ก็ stack ใครได้สบาย

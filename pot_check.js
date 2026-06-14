@@ -18,14 +18,20 @@ const m = appSrc.match(/\/\/ ===POT-ENGINE-START===[\s\S]*?\/\/ ===POT-ENGINE-EN
 if(!m){ console.error('ไม่พบ POT-ENGINE markers ใน app.js'); process.exit(1); }
 eval(m[0].replace('function potEngine','globalThis.potEngine = function'));
 
-let okCount = 0; const bad = [];
+let okCount = 0; const bad = [], badCall = [];
 SPOTS.forEach(s => {
   const r = potEngine(s);
   if(r.ok) okCount++;
   else bad.push(`${s.id}: pot field ${s.pot} ≠ คำนวณ ${r.finalPot}`);
+  // toCall ต้องตรงกับที่ hero ค้างจ่ายจริง (เช็คเฉพาะ spot ที่ pot ตรง — เชื่อ action data ได้)
+  // ยกเว้น open spot: toCall:0 = "ไม่มีเบทให้เรียก" โดยเจตนา (engine จะเห็นแค่ blind 0.5-1)
+  const openSpot = (s.toCall||0)===0 && r.heroToCall<=1;
+  if(r.ok && !openSpot && Math.abs((s.toCall||0) - r.heroToCall) > 0.3)
+    badCall.push(`${s.id}: toCall field ${s.toCall} ≠ คำนวณ ${r.heroToCall}`);
 });
 console.log(`ตรวจ ${SPOTS.length} spots → street-pot แสดงได้ ${okCount}, ซ่อน ${bad.length}`);
 if(bad.length){ console.log('\nspot ที่ pot ไม่ตรง action (street pot ถูกซ่อน):'); bad.forEach(b=>console.log('  - '+b)); }
+if(badCall.length){ console.log('\n⚠ spot ที่ toCall ผิด (ต้องแก้):'); badCall.forEach(b=>console.log('  ✗ '+b)); }
 
 // มือ chain (h*) ต้องตรงทุกตัว — ถ้าไม่ตรงคือ data ผิด ให้แก้
 const badChain = bad.filter(b=>/^h\d/.test(b));
