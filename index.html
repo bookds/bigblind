@@ -39,22 +39,22 @@
   .brand .spade{color:var(--gold)}
   .stats{margin-left:auto; display:flex; gap:7px}
   .stat{background:rgba(0,0,0,.28); border:1px solid var(--line); border-radius:11px; padding:5px 9px; text-align:center; min-width:52px}
-  .stat b{display:block; font-size:15px; line-height:1.1}
-  .stat span{font-size:9px; color:var(--muted); text-transform:uppercase; letter-spacing:.6px}
+  .stat b{display:block; font-size:17px; line-height:1.1}
+  .stat span{font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:.6px}
   .stat.streak b{color:var(--gold)}
   .stat.acc b{color:var(--accent)}
 
   /* ---------- Filter chips ---------- */
   .filters{display:flex; gap:6px; margin-bottom:8px}
   .chip{
-    flex:1; text-align:center; font-size:12px; font-weight:600; padding:7px 4px; border-radius:10px;
+    flex:1; text-align:center; font-size:13px; font-weight:600; padding:7px 4px; border-radius:10px;
     background:rgba(0,0,0,.25); border:1px solid var(--line); color:var(--muted); transition:.15s;
   }
   .chip.on{background:var(--gold); color:#1a1407; border-color:var(--gold)}
 
   /* ---------- Scenario meta ---------- */
   .meta{display:flex; flex-wrap:wrap; gap:6px; margin-bottom:8px}
-  .tag{font-size:10.5px; font-weight:700; padding:4px 9px; border-radius:20px; display:flex; align-items:center; gap:4px; letter-spacing:.3px}
+  .tag{font-size:12px; font-weight:700; padding:4px 9px; border-radius:20px; display:flex; align-items:center; gap:4px; letter-spacing:.3px}
   .tag.stage{background:rgba(55,200,255,.16); color:var(--accent); border:1px solid rgba(55,200,255,.35)}
   .tag.stack{background:rgba(255,209,102,.16); color:var(--gold); border:1px solid rgba(255,209,102,.35)}
   .tag.icm{background:rgba(255,90,95,.16); color:var(--bad); border:1px solid rgba(255,90,95,.4)}
@@ -62,7 +62,7 @@
   .tag.hstep{background:rgba(150,255,180,.12); color:#a8f0bd; border:1px solid rgba(150,255,180,.35)}
 
   /* ---------- ICM tournament-state bar ---------- */
-  .icmbar{font-size:11.5px; font-weight:700; color:var(--warn); line-height:1.5;
+  .icmbar{font-size:13px; font-weight:700; color:var(--warn); line-height:1.5;
     background:rgba(255,176,32,.1); border:1px solid rgba(255,176,32,.34);
     border-radius:10px; padding:7px 11px; margin-bottom:8px}
   .icmbar b{color:#ffdca0}
@@ -77,15 +77,15 @@
   }
   .table::after{content:""; position:absolute; inset:7px; border:1px solid rgba(255,255,255,.07); border-radius:110px/82px; pointer-events:none}
 
-  .potline{text-align:center; font-size:12px; color:var(--muted); margin-bottom:2px}
-  .potline b{color:#fff; font-size:14px}
+  .potline{text-align:center; font-size:13px; color:var(--muted); margin-bottom:2px}
+  .potline b{color:#fff; font-size:15px}
   .board{display:flex; gap:5px; justify-content:center; min-height:56px; align-items:center; margin:4px 0}
   .board .ph{font-size:11px; color:rgba(255,255,255,.35); letter-spacing:2px}
 
   /* hero seat */
   .hero{display:flex; flex-direction:column; align-items:center; gap:4px; margin-top:2px}
   .holecards{display:flex; gap:6px}
-  .heroinfo{font-size:11px; color:var(--muted)}
+  .heroinfo{font-size:12px; color:var(--muted)}
   .heroinfo b{color:var(--gold)}
 
   /* ---------- Cards ---------- */
@@ -110,23 +110,23 @@
     padding:9px 11px 11px; margin-bottom:8px; flex:0 1 auto; overflow-y:auto;
   }
   .log-head{display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin-top:10px; padding-top:10px; border-top:1px solid var(--line)}
-  .lh{font-size:12px; font-weight:800; padding:4px 9px; border-radius:8px; display:flex; align-items:center; gap:5px}
-  .lh small{font-size:8.5px; font-weight:800; letter-spacing:.5px; color:var(--muted); text-transform:uppercase}
+  .lh{font-size:13px; font-weight:800; padding:4px 9px; border-radius:8px; display:flex; align-items:center; gap:5px}
+  .lh small{font-size:10px; font-weight:800; letter-spacing:.5px; color:var(--muted); text-transform:uppercase}
   .lh.pos{background:rgba(255,209,102,.16); border:1px solid rgba(255,209,102,.4); color:var(--gold)}
   .lh.pos small{color:rgba(255,209,102,.7)}
   .lh.pot{background:rgba(255,255,255,.07); border:1px solid var(--line); color:#eef2f0}
   .lh.call{background:rgba(55,200,255,.14); border:1px solid rgba(55,200,255,.35); color:var(--accent)}
   .lh.call small{color:rgba(55,200,255,.7)}
-  .st-head{font-size:9.5px; letter-spacing:1.5px; color:var(--muted); text-transform:uppercase; font-weight:800; margin:8px 0 4px}
+  .st-head{font-size:11px; letter-spacing:1.5px; color:var(--muted); text-transform:uppercase; font-weight:800; margin:8px 0 4px}
   .st-head:first-child{margin-top:0}
   .st-row{display:flex; flex-wrap:wrap; gap:5px; align-items:center}
   .pill{display:flex; align-items:center; gap:5px; border-radius:8px; padding:3px 8px;
     background:rgba(255,255,255,.05); border:1px solid var(--line)}
-  .pill .pos{font-size:9px; font-weight:800; color:var(--muted); letter-spacing:.3px; display:flex; flex-direction:column; align-items:flex-start; line-height:1.25}
-  .pill .pstk{font-size:8px; font-weight:700; color:var(--muted); opacity:.75; letter-spacing:0}
+  .pill .pos{font-size:10.5px; font-weight:800; color:var(--muted); letter-spacing:.3px; display:flex; flex-direction:column; align-items:flex-start; line-height:1.25}
+  .pill .pstk{font-size:9.5px; font-weight:700; color:var(--muted); opacity:.75; letter-spacing:0}
   .pill.hero .pstk{color:var(--gold); opacity:.85}
   .st-head .sthp{color:rgba(255,209,102,.75); letter-spacing:.5px}
-  .pill .act{font-size:12px; font-weight:800; color:#dfe7e3}
+  .pill .act{font-size:13.5px; font-weight:800; color:#dfe7e3}
   .pill.fold{opacity:.45}
   .pill.check .act{color:#bcc8c2}
   .pill.call .act{color:var(--good)}
@@ -136,17 +136,17 @@
   .pill.hero{background:rgba(255,209,102,.16); border-color:var(--gold)}
   .pill.hero .pos{color:var(--gold)}
   .stacks{display:flex; flex-wrap:wrap; gap:5px; align-items:center; margin:-3px 0 9px}
-  .stacks .slab{font-size:8.5px; font-weight:800; letter-spacing:.5px; color:var(--muted); text-transform:uppercase; margin-right:1px}
+  .stacks .slab{font-size:10px; font-weight:800; letter-spacing:.5px; color:var(--muted); text-transform:uppercase; margin-right:1px}
   .stk{display:flex; flex-direction:row; align-items:center; gap:4px; border-radius:7px; padding:2px 7px; background:rgba(255,255,255,.05); border:1px solid var(--line); white-space:nowrap}
-  .stk b{font-size:9px; font-weight:800; color:var(--muted); letter-spacing:.3px}
-  .stk span{font-size:11px; font-weight:800; color:#cfd8d3}
+  .stk b{font-size:10.5px; font-weight:800; color:var(--muted); letter-spacing:.3px}
+  .stk span{font-size:12px; font-weight:800; color:#cfd8d3}
   .stk.hero{background:rgba(255,209,102,.14); border-color:rgba(255,209,102,.5)}
   .stk.hero b{color:var(--gold)} .stk.hero span{color:#ffdca0}
   .stk.short span{color:var(--bad)} .stk.big span{color:var(--good)}
-  .st-note{font-size:11.5px; color:var(--muted); font-style:italic}
+  .st-note{font-size:12.5px; color:var(--muted); font-style:italic}
   .turn{display:flex; gap:8px; align-items:flex-start; margin:0 0 8px; padding:10px 12px;
     background:rgba(255,209,102,.08); border:1px solid rgba(255,209,102,.32); border-radius:12px;
-    font-size:13.5px; font-weight:700; color:var(--gold); line-height:1.45; flex:0 0 auto}
+    font-size:15px; font-weight:700; color:var(--gold); line-height:1.5; flex:0 0 auto}
   .turn .tdot{flex:0 0 auto; width:9px; height:9px; border-radius:50%; background:var(--gold); margin-top:5px;
     box-shadow:0 0 0 0 rgba(255,209,102,.6); animation:ping 1.4s infinite}
   @keyframes ping{0%{box-shadow:0 0 0 0 rgba(255,209,102,.55)}70%{box-shadow:0 0 0 7px rgba(255,209,102,0)}100%{box-shadow:0 0 0 0 rgba(255,209,102,0)}}
@@ -155,12 +155,12 @@
   .actions{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:auto}
   .actions.three{grid-template-columns:1fr 1fr 1fr}
   .btn{
-    border:none; border-radius:13px; padding:12px 6px; font-size:15px; font-weight:800; color:#fff;
+    border:none; border-radius:13px; padding:13px 6px; font-size:16px; font-weight:800; color:#fff;
     background:linear-gradient(180deg,#2a2e36,#1c1f25); border:1px solid rgba(255,255,255,.1);
     display:flex; flex-direction:column; align-items:center; gap:2px; transition:transform .08s;
   }
   .btn:active{transform:scale(.96)}
-  .btn small{font-size:10px; font-weight:600; opacity:.7}
+  .btn small{font-size:11.5px; font-weight:600; opacity:.7}
   .btn.fold{background:linear-gradient(180deg,#5a2126,#3d171a)}
   .btn.call{background:linear-gradient(180deg,#1f6f4a,#155539)}
   .btn.raise{background:linear-gradient(180deg,#9a6b12,#6e4c0c)}
@@ -184,20 +184,20 @@
   .grab::before{content:""; width:44px; height:5px; border-radius:3px; background:rgba(255,255,255,.25)}
   .grab:active::before{background:rgba(255,255,255,.45)}
   .verdict{display:flex; align-items:center; gap:10px; margin-bottom:10px}
-  .vbadge{font-size:13px; font-weight:800; padding:6px 13px; border-radius:20px}
+  .vbadge{font-size:14px; font-weight:800; padding:6px 13px; border-radius:20px}
   .vbadge.good{background:rgba(46,204,113,.2); color:var(--good); border:1px solid var(--good)}
   .vbadge.ok{background:rgba(255,176,32,.18); color:var(--warn); border:1px solid var(--warn)}
   .vbadge.bad{background:rgba(255,90,95,.18); color:var(--bad); border:1px solid var(--bad)}
-  .vbest{font-size:13px; color:var(--muted)}
+  .vbest{font-size:14px; color:var(--muted)}
   .vbest b{color:var(--good)}
   .reveal{display:flex; align-items:center; gap:10px; margin:2px 0 10px; padding:8px 11px;
     background:rgba(255,255,255,.05); border:1px solid var(--line); border-radius:12px}
-  .reveal .rlab{font-size:11.5px; font-weight:800; color:var(--muted); line-height:1.4}
+  .reveal .rlab{font-size:13px; font-weight:800; color:var(--muted); line-height:1.4}
   .reveal .rlab b{color:#ffdca0}
   .reveal .rcards{display:flex; gap:4px}
-  .explain{font-size:13.5px; line-height:1.65; color:#dde4e0; max-height:34vh; overflow-y:auto}
+  .explain{font-size:15px; line-height:1.7; color:#dde4e0; max-height:34vh; overflow-y:auto}
   .explain b{color:var(--gold)}
-  .explain .k{display:inline-block; background:rgba(255,255,255,.08); border-radius:5px; padding:0 5px; font-weight:700; color:#fff; font-size:12px}
+  .explain .k{display:inline-block; background:rgba(255,255,255,.08); border-radius:5px; padding:0 5px; font-weight:700; color:#fff; font-size:13.5px}
   .sheetnav{display:flex; gap:10px; margin-top:14px}
   .next{
     flex:1; border:none; border-radius:13px; padding:15px; font-size:16px; font-weight:800;
@@ -222,15 +222,15 @@
 
   /* ---------- Deep "why" + ask tools ---------- */
   .sheettools{display:flex; gap:8px; margin-top:12px}
-  .tbtn{flex:1; border:1px solid var(--line); border-radius:11px; padding:11px 8px; font-size:13px; font-weight:800;
+  .tbtn{flex:1; border:1px solid var(--line); border-radius:11px; padding:11px 8px; font-size:14px; font-weight:800;
     background:rgba(255,255,255,.05); color:var(--ink); display:flex; align-items:center; justify-content:center; gap:6px}
   .tbtn:active{transform:scale(.97)}
   .tbtn.on{background:rgba(255,209,102,.16); border-color:var(--gold); color:var(--gold)}
   .tbtn .ic{font-size:14px}
-  .deep{font-size:13px; line-height:1.7; color:#cfd8d3; max-height:0; overflow:hidden; transition:max-height .3s ease, margin .3s ease}
+  .deep{font-size:14.5px; line-height:1.75; color:#cfd8d3; max-height:0; overflow:hidden; transition:max-height .3s ease, margin .3s ease}
   .deep.open{max-height:46vh; overflow-y:auto; margin-top:12px; padding-top:12px; border-top:1px solid var(--line)}
   .deep b{color:var(--gold)}
-  .deep .k{display:inline-block; background:rgba(255,255,255,.08); border-radius:5px; padding:0 5px; font-weight:700; color:#fff; font-size:12px}
+  .deep .k{display:inline-block; background:rgba(255,255,255,.08); border-radius:5px; padding:0 5px; font-weight:700; color:#fff; font-size:13px}
 
   /* ---------- AI chat panel ---------- */
   .chat{
@@ -249,7 +249,7 @@
   .chat-ctx{font-size:11px; color:var(--muted); padding:8px 16px; border-bottom:1px solid var(--line); background:rgba(0,0,0,.2)}
   .chat-ctx b{color:var(--gold)}
   .chat-body{flex:1; overflow-y:auto; padding:14px 16px; display:flex; flex-direction:column; gap:10px}
-  .msg{max-width:88%; padding:10px 13px; border-radius:14px; font-size:13.5px; line-height:1.6; white-space:pre-wrap; word-wrap:break-word}
+  .msg{max-width:88%; padding:10px 13px; border-radius:14px; font-size:15px; line-height:1.6; white-space:pre-wrap; word-wrap:break-word}
   .msg.u{align-self:flex-end; background:linear-gradient(180deg,#37c8ff,#1f9fd1); color:#04222e; border-bottom-right-radius:5px; font-weight:600}
   .msg.a{align-self:flex-start; background:rgba(255,255,255,.06); border:1px solid var(--line); color:#dde4e0; border-bottom-left-radius:5px}
   .msg.a b{color:var(--gold)}
@@ -276,7 +276,7 @@
     background:linear-gradient(180deg,#2ecc71,#22a85c); color:#04220f}
   .keybox a{color:var(--accent)}
 
-  .hintbar{text-align:center; font-size:11px; color:var(--muted); margin-top:6px; min-height:14px}
+  .hintbar{text-align:center; font-size:12px; color:var(--muted); margin-top:6px; min-height:14px}
 </style>
 </head>
 <body>
