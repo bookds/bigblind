@@ -24,6 +24,37 @@
   function saveSession(){ try{ localStorage.setItem(SS, JSON.stringify({filter, queue, history, pos})); }catch(e){} }
   function loadSession(){ try{ return JSON.parse(localStorage.getItem(SS)); }catch(e){ return null; } }
 
+  // ---- seeded distractor injection (stable 4-choice layout per spot) ----
+  function seededRand(seed){
+    let s = seed >>> 0;
+    return ()=>{ s = Math.imul(s^(s>>>13), s^(s<<7))>>>0; s = (s^(s>>>17))>>>0; return s/0x100000000; };
+  }
+  function hashId(str){ let h=5381; for(const c of str) h=Math.imul(h,33)^c.charCodeAt(0); return h>>>0; }
+
+  function prepareSpot(spot){
+    const rand = seededRand(hashId(spot.id));
+    function pool(opts){
+      const labels = new Set(opts.map(o=>o.label));
+      const keys   = new Set(opts.map(o=>o.k));
+      const d = [];
+      if(!labels.has('Fold'))   d.push({k:'fold',  label:'Fold'});
+      if(!labels.has('All-in') && !keys.has('shove')) d.push({k:'shove', label:'All-in'});
+      if( spot.toCall && !labels.has('Call'))   d.push({k:'call',  label:'Call',  sub:spot.toCall+'bb'});
+      if(!spot.toCall && !labels.has('Check'))  d.push({k:'check', label:'Check'});
+      if( spot.toCall && !labels.has('Raise') && !labels.has('3-Bet'))
+        d.push({k:'raise', label:'Raise', sub:+(spot.toCall*3).toFixed(1)+'bb'});
+      if(!spot.toCall && !labels.has('Bet') && !labels.has('C-bet'))
+        d.push({k:'raise', label:'Bet',   sub:'½ pot'});
+      return d;
+    }
+    let opts = [...spot.opts];
+    while(opts.length < 4){ const d = pool(opts); if(!d.length) break; opts.push(d[Math.floor(rand()*d.length)]); }
+    const perm = opts.map((_,i)=>i);
+    for(let i=perm.length-1;i>0;i--){ const j=Math.floor(rand()*(i+1)); [perm[i],perm[j]]=[perm[j],perm[i]]; }
+    const shuffled = perm.map(i=>opts[i]);
+    return {...spot, opts:shuffled, best:perm.indexOf(spot.best), ok:(spot.ok||[]).map(o=>perm.indexOf(o)).filter(x=>x>=0)};
+  }
+
   // ---- card rendering ----
   function cardEl(code, small){
     const r = code.slice(0, code.length-1);
@@ -54,6 +85,7 @@
 
   // ---- render a spot ---- (chosen=null คือยังไม่ตอบ, มีค่าคือโหมดทบทวน)
   function render(spot, chosen){
+    spot = prepareSpot(spot);
     current = spot;
 
     // meta badges
@@ -90,7 +122,7 @@
 
     // action buttons
     const act=$('actions'); act.innerHTML='';
-    act.className = 'actions' + (spot.opts.length===3?' three':'');
+    act.className = 'actions' + (spot.opts.length===3?' three': spot.opts.length===4?' four':'');
     spot.opts.forEach((o,i)=>{
       const b=document.createElement('button');
       b.className='btn '+o.k;
